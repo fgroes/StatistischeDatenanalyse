@@ -4,8 +4,6 @@ Created on Thu Jul 03 10:35:48 2014
 """
 import numpy as np
 import matplotlib.pyplot as plt
-import doctest
-#import scipy as sp
 
 
 def mean(x):
