@@ -36,6 +36,8 @@ def median_abs_dev(x):
     
     
 def _cum_dist_scalar(x, rel_freq, bins):
+    if x < bins[0]: return 0.0
+    elif x >= bins[-1]: return 1.0
     try: 
         j = (bins <= x).sum()
         f1 = np.sum(rel_freq[:j - 1])
