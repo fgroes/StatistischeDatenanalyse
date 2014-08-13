@@ -6,83 +6,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def mean(x):
+def empir_cum_dist(x, series):
     """
-    Mean of array in first dimension
+    empirical cummulative distribution function
     
-    >>> data = np.array([1.2, 2.4, 1.3, 1.3, 0.0, 1.0, 1.8, 0.8, 4.6, 1.4])
-    >>> mean(data)
-    1.5800000000000001
+    >>> import pandas as pd
+    >>> sleep_extension = pd.DataFrame(data={'extension factor': [1.2, 2.4, 1.3, 1.3, 0.0, 1.0, 1.8, 0.8, 4.6, 1.4]})
+    >>> empir_cum_dist([1.3, 1.9], sleep_extension['extension factor'])
+    [0.6, 0.8]
     """
-    N = x.shape[0]
-    return np.sum(x) / N
-    
-
-def median(x):
-    """
-    Median of array in first dimension
-    
-    >>> data = np.array([1.2, 2.4, 1.3, 1.3, 0.0, 1.0, 1.8, 0.8, 4.6, 1.4])
-    >>> median(data)
-    1.3
-    >>> data_new = data[:-3]
-    >>> median(data_new)
-    1.3
-    """
-    N = x.shape[0]
-    x_sorted = np.sort(x)
-    if (N % 2 == 1):
-        m = x_sorted[(N + 1) / 2 - 1]
-    else:
-        m = (x_sorted[N / 2 - 1] + x_sorted[N / 2]) / 2
-    return m
-    
-
-def quantile(x, a):
-    """
-    a-quantile of array in first dimension
-    
-    >>> data = np.array([1.2, 2.4, 1.3, 1.3, 0.0, 1.0, 1.8, 0.8, 4.6, 1.4])
-    >>> quantile(data, 0.2)
-    0.90000000000000002
-    >>> quantile(data, 0.72)
-    1.8
-    >>> quantile(data, -0.3)
-    Traceback (most recent call last):
-        ...
-    ValueError: a must be in 0.0 <= a <= 1.0
-    >>> quantile(data, 1.1)
-    Traceback (most recent call last):
-        ...
-    ValueError: a must be in 0.0 <= a <= 1.0
-    """
-    if not 0.0 <= a <= 1.0:
-        raise ValueError('a must be in 0.0 <= a <= 1.0')
-    N = x.shape[0]
-    x_sorted = np.sort(x)
-    idx = a * N
-    if (idx.is_integer()):
-        q = (x_sorted[idx - 1] + x_sorted[idx]) / 2
-    else:
-        idx = np.round(idx + 1.0 / 2)
-        q = x_sorted[idx - 1]
-    return q
-    
-    
-def variance(x):
-    """
-    Variance of array in first dimension
-        
-    >>> data = np.array([1.2, 2.4, 1.3, 1.3, 0.0, 1.0, 1.8, 0.8, 4.6, 1.4])
-    >>> variance(data)
-    1.5128888888888889
-    """
-    N = x.shape[0]
-    m = mean(x)
-    v = np.sum((x - m) ** 2) / (N - 1)
-    return v
+    series_sorted = series.copy()
+    series_sorted.sort()
+    try:
+        f = [float((series_sorted <= i).sum()) / series_sorted.size 
+            for i in np.asarray(x)]
+    except TypeError:
+        f = (float(series_sorted <= x).sum()) / series_sorted.size
+    return f
     
     
 if __name__ == '__main__':
     import doctest
-    doctest.testmod()
+    doctest.testmod(verbose=True)

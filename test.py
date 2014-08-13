@@ -9,5 +9,9 @@ import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
     import statana.basicstats as bs
-    data = np.array([1, 2, 3])
-    print(bs.mean(data))
+    import data.data as data
+    data = data.sleep_extension
+    x = np.linspace(0, 5, 1000)
+    f = bs.empir_cum_dist(x, data['extension factor'])
+    plt.plot(x, f, 'r-')
+    plt.show()
