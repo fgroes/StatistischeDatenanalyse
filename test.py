@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 if __name__ == '__main__':
     import statana.basicstats as bs
     import data.data as data
-    data = data.sleep_extension
+    print(data.sleep_extension.describe())
     x = np.linspace(0, 5, 1000)
-    f = bs.empir_cum_dist(x, data['extension factor'])
+    f = bs.empir_cum_dist(x, data.sleep_extension['extension factor'])
     plt.plot(x, f, 'r-')
     plt.show()
