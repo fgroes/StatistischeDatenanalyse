@@ -35,9 +35,36 @@ def median_abs_dev(x):
     return (x - x.quantile()).apply(np.abs).quantile()   
     
     
+def _cum_dist_scalar(x, rel_freq, bins):
+    try: 
+        j = (bins <= x).sum()
+        f1 = np.sum(rel_freq[:j - 1])
+        f2 = f1 + rel_freq[j - 1]
+        f = f1 + (f2 - f1) / (bins[j] - bins[j - 1]) * (x - bins[j - 1])
+    except IndexError:
+        f = 1.0
+    return f
+    
+    
+def cum_dist(x, series, bins):
+    """
+    cummulative distribution function
+    
+    >>> cum_dist([90.0, 110.0, 134.5], chicks['weight in g'], \
+np.r_[74.5:134.5 + 1:5.0])
+    [0.058000000000000003, 0.64700000000000002, 1.0]
+    """
+    freq, bins = np.histogram(series, bins=bins)
+    rel_freq = freq.astype(np.float) / series.size
+    try:
+        f = [_cum_dist_scalar(i, rel_freq, bins) for i in x]
+    except TypeError:
+        f = _cum_dist_scalar(x, rel_freq, bins)
+    return f
+           
+    
 if __name__ == '__main__':
     import doctest
-    sleep_extension = pd.DataFrame(data={
-        'extension factor': [1.2, 2.4, 1.3, 1.3, 0.0, 1.0, 1.8, 0.8, 4.6, 1.4]})
-    g = {'sleep_extension': sleep_extension}
+    import data
+    g = {'sleep_extension': data.sleep_extension, 'chicks': data.chicks}
     doctest.testmod(verbose=True, extraglobs=g)
