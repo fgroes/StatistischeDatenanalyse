@@ -63,6 +63,12 @@ np.r_[74.5:134.5 + 1:5.0])
     except TypeError:
         f = _cum_dist_scalar(x, rel_freq, bins)
     return f
+    
+    
+def lin_regression(x, y):
+    b = x.cov(y) / x.var()
+    a = y.mean() - b * x.mean()
+    return a, b
            
     
 if __name__ == '__main__':

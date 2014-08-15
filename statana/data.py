@@ -17,7 +17,7 @@ mendel_data = np.array([[45, 27, 24, 19, 32, 26, 88, 22, 28, 25],
 mendel_plants = pd.DataFrame(data=mendel_data, columns=['round', 'edgy'])
 
 chicks = pd.DataFrame(data={
-    'weight in g':
+    'weight':
         [107, 117, 105, 106, 114, 105, 113, 88, 119, 116,
          108, 98, 104, 126, 102, 100, 120, 121, 87, 110,
          111, 114, 121, 114, 104, 94, 101, 94, 95, 114,
@@ -28,9 +28,24 @@ chicks = pd.DataFrame(data={
          105, 112, 92, 99, 118, 100, 130, 112, 110, 103,
          116, 115, 96, 125, 97, 114, 111, 101, 101, 90,
          122, 106, 109, 116, 103, 134, 86, 124, 107, 107]})
+         
+         
+waterfalls = pd.DataFrame(data={
+    'name': ['Lower Yellowstone',  'Yosemite', 'Canadian Niagara', 
+        'American Niagara', 'Upper Yellowstone', 'Gullfoss (Lower)',
+        'Firehole', 'Godafoss', 'Gullfoss (Upper)', 'Fort Greeley'], 
+    'height': [95, 72, 50, 53, 35, 27, 13.4, 10.9, 7.5, 5.2],
+    'frequency': [5.6, 4.0, 6.2, 8.1, 8.7, 6.2, 19, 21, 39, 40]})
+
+
+darper = pd.DataFrame(data={
+    'moistsure': [4.7, 5.0, 5.2, 5.2, 5.9, 4.7, 5.9, 5.2, 5.3, 5.9, 5.6, 5.0],
+    'density': [3, 3, 4, 5, 10, 2, 9, 3, 7, 6, 6, 4]})
 
 
 if __name__ == '__main__':
     print(sleep_extension.describe())
     print(mendel_plants.describe())
     print(chicks.describe())
+    print(waterfalls.describe())
+    print(darper.describe())
