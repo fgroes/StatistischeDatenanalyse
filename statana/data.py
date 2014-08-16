@@ -2,6 +2,7 @@
 Created on Wed Aug 13 20:20:05 2014
 @author: fritz
 """
+import os
 import numpy as np
 #import matplotlib.pyplot as plt
 #import scipy as sp
@@ -41,6 +42,12 @@ waterfalls = pd.DataFrame(data={
 darper = pd.DataFrame(data={
     'moistsure': [4.7, 5.0, 5.2, 5.2, 5.9, 4.7, 5.9, 5.2, 5.3, 5.9, 5.6, 5.0],
     'density': [3, 3, 4, 5, 10, 2, 9, 3, 7, 6, 6, 4]})
+    
+
+file_name = os.path.join(os.path.split(__file__)[0], 'iris.txt')
+print(file_name)
+with open(file_name) as fid:
+    iris = pd.read_table(fid, sep=';')
 
 
 if __name__ == '__main__':
@@ -49,3 +56,4 @@ if __name__ == '__main__':
     print(chicks.describe())
     print(waterfalls.describe())
     print(darper.describe())
+    print(iris.describe())
